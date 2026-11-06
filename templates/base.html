@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#176b4d">
+  <title>{% block title %}智学伴{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script defer src="/assets/app.js"></script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="切换教室导航" aria-expanded="false">☰</button>
+      <a class="brand-link" href="{% block brand_href %}/{% endblock %}">
+        <span class="brand-mark" aria-hidden="true">◧</span>
+        <span class="brand-name">智学伴</span>
+      </a>
+      <span class="role-chip" id="role-chip">{% block role_chip %}{% endblock %}</span>
+    </div>
+    <div class="topbar-user">
+      <span id="current-user" class="muted">…</span>
+      <a class="link-button" href="/logout">登出</a>
+    </div>
+  </header>
+  <div class="app-shell">
+    <aside class="app-sidebar" id="app-sidebar" aria-label="教室导航">
+      <nav class="sidebar-nav">
+        <a class="sidebar-home" id="sidebar-home" href="/">工作台</a>
+        <p class="sidebar-title">我的教室</p>
+        <ul class="sidebar-list" id="sidebar-list"></ul>
+      </nav>
+      <div class="sidebar-actions" id="sidebar-actions"></div>
+    </aside>
+    <div class="sidebar-scrim" id="sidebar-scrim" hidden></div>
+    <main class="{% block main_class %}page{% endblock %}">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script defer src="/assets/sidebar.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

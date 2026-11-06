@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}学生端 · 智学伴{% endblock %}
+{% block role_chip %}学生端{% endblock %}
+{% block main_class %}page{% endblock %}
+{% block content %}
+    <div class="dashboard-head">
+      <div>
+        <p class="step-label">学生工作台</p>
+        <h1>我的教室</h1>
+        <p class="subtitle">用老师提供的邀请码加入教室，然后进入教室完成作业。</p>
+      </div>
+      <div class="dashboard-actions">
+        <a class="primary-button profile-entry" href="/profile">📊 我的学习档案</a>
+        <button class="primary-button" id="join-classroom" type="button">加入教室</button>
+      </div>
+    </div>
+    <div class="list-toolbar">
+      <input id="classroom-search" class="search-input" type="search" placeholder="搜索教室名称或说明…" aria-label="搜索教室">
+    </div>
+    <div class="card-grid" id="classroom-grid"></div>
+
+{% endblock %}
+{% block scripts %}
+  <script defer src="/assets/dashboard.js"></script>
+{% endblock %}

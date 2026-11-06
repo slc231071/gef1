@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}作业 · 智学伴{% endblock %}
+{% block role_chip %}…{% endblock %}
+{% block main_class %}page{% endblock %}
+{% block head %}<script>window.__HOMEWORK_ID__ = {{ homework_id }};</script>{% endblock %}
+{% block content %}
+    <header class="hw-banner">
+      <div class="hw-banner-icon" aria-hidden="true">◧</div>
+      <div class="hw-banner-main">
+        <p class="step-label" id="hw-kicker">作业</p>
+        <h1 id="homework-title">载入中…</h1>
+        <p class="hw-banner-desc" id="homework-description"></p>
+        <div class="hw-meta" id="hw-meta"></div>
+      </div>
+      <a id="back-link" class="link-button hw-back" href="/">← 返回</a>
+    </header>
+
+    <section class="panel graded-view" id="graded-view" hidden>
+      <div class="section-heading">
+        <h2>老师批改</h2>
+        <span class="badge badge-returned">已发还</span>
+      </div>
+      <div class="graded-pages" id="graded-pages"></div>
+    </section>
+
+    <section class="panel practice-view" id="practice-view" hidden>
+      <div class="section-heading">
+        <h2>AI 巩固练习</h2>
+        <span class="badge badge-answer" id="practice-badge">个性化</span>
+      </div>
+      <p class="muted" id="practice-intro">老师发还批改后，AI 会结合你的学习档案生成学习报告，巩固薄弱知识点。</p>
+      <div class="practice-actions">
+        <label class="practice-toggle">
+          <input type="checkbox" id="practice-with-questions" checked>
+          <span>同时生成练习题（巩固薄弱点）</span>
+        </label>
+      </div>
+      <div class="practice-actions">
+        <button class="primary-button" id="practice-generate" type="button">🤖 AI 生成报告与练习</button>
+      </div>
+      <div id="practice-report"></div>
+      <div id="practice-questions"></div>
+    </section>
+
+    <div class="hw-layout">
+      <section class="hw-main panel">
+        <div class="tabbar" role="tablist" aria-label="作业视图" id="hw-tabs" hidden>
+          <button class="tab active" id="tab-primary" type="button" role="tab" aria-selected="true" aria-controls="pane-primary"></button>
+          <button class="tab" id="tab-secondary" type="button" role="tab" aria-selected="false" aria-controls="pane-secondary">说明</button>
+        </div>
+        <div class="tab-panel" id="pane-primary" role="tabpanel" aria-labelledby="tab-primary">
+          <div id="work-roster" hidden>
+            <div class="roster-summary" id="roster-summary"></div>
+            <div class="filter-chips" id="roster-filters"></div>
+            <ul class="roster" id="roster-list"></ul>
+          </div>
+        </div>
+        <div class="tab-panel" id="pane-secondary" role="tabpanel" aria-labelledby="tab-secondary" hidden>
+          <div class="hw-instructions">
+            <p class="muted" id="instructions-text">载入中…</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hw-side">
+        <div class="work-card panel">
+          <div class="section-heading">
+            <h2 id="work-title">…</h2>
+            <span id="work-status" class="badge badge-muted">…</span>
+          </div>
+          <div class="work-thumbs" id="work-thumbs"></div>
+          <div class="work-actions">
+            <button class="primary-button" id="work-add" type="button">+ 添加作业</button>
+            <button class="primary-button" id="work-submit" type="button" hidden>提交作业</button>
+            <button class="primary-button" id="work-save" type="button" hidden>保存</button>
+            <button class="danger-button" id="work-cancel" type="button" hidden>取消提交</button>
+          </div>
+          <p class="form-note" id="work-note"></p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="scan-modal" id="scan-modal" hidden>
+      <div class="scan-modal-panel" role="dialog" aria-modal="true" aria-labelledby="scan-modal-title">
+        <header class="scan-modal-header">
+          <div><p class="step-label" id="scan-modal-kicker">扫描</p><h2 id="scan-modal-title">…</h2></div>
+          <div class="scan-modal-actions">
+            <button class="primary-button" id="scan-modal-primary" type="button">完成</button>
+            <button class="link-button" id="scan-modal-close" type="button">✕ 关闭</button>
+          </div>
+        </header>
+        <div class="scan-modal-body"><div id="modal-scanner"></div></div>
+      </div>
+    </div>
+
+    <div class="scan-modal" id="viewer-modal" hidden>
+      <div class="scan-modal-panel" role="dialog" aria-modal="true" aria-labelledby="viewer-modal-title">
+        <header class="scan-modal-header">
+          <div><p class="step-label">学生提交</p><h2 id="viewer-modal-title">…</h2></div>
+          <button class="link-button" id="viewer-modal-close" type="button">✕ 关闭</button>
+        </header>
+        <div class="scan-modal-body"><div id="viewer-scanner"></div></div>
+      </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+  <script defer src="/assets/grading-draw.js"></script>
+  <script defer src="/assets/converter.js"></script>
+  <script defer src="/assets/practice.js"></script>
+  <script defer src="/assets/homework.js"></script>
+{% endblock %}

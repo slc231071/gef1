@@ -1,0 +1,18 @@
+﻿{
+  "teacher": {
+    "password_sha256": "cde383eee8ee7a4400adf7a15f716f179a2eb97646b37e089eb8d6d04e663416",
+    "role": "teacher"
+  },
+  "student": {
+    "password_sha256": "703b0a3d6ad75b649a28adde7d83c6251da457549263bc7ff45ec709b0a8448b",
+    "role": "student"
+  },
+  "alice": {
+    "password_sha256": "703b0a3d6ad75b649a28adde7d83c6251da457549263bc7ff45ec709b0a8448b",
+    "role": "student"
+  },
+  "bob": {
+    "password_sha256": "703b0a3d6ad75b649a28adde7d83c6251da457549263bc7ff45ec709b0a8448b",
+    "role": "student"
+  }
+}

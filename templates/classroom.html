@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}教室 · 智学伴{% endblock %}
+{% block role_chip %}…{% endblock %}
+{% block main_class %}page{% endblock %}
+{% block head %}<script>window.__CLASSROOM_ID__ = {{ classroom_id }};</script>{% endblock %}
+{% block content %}
+    <header class="classroom-banner">
+      <div class="classroom-banner-main">
+        <p class="step-label" id="classroom-kicker">教室</p>
+        <h1 id="classroom-name">载入中…</h1>
+        <p class="classroom-banner-desc" id="classroom-desc"></p>
+        <div id="classroom-code-wrap"></div>
+      </div>
+      <a class="link-button hw-back" id="back-link" href="/">← 返回</a>
+    </header>
+
+    <div class="classroom-tools" id="classroom-tools"></div>
+
+    <section class="panel">
+      <div class="tabbar" role="tablist" aria-label="教室视图" id="room-tabs">
+        <button class="tab active" id="tab-homework" type="button" role="tab" aria-selected="true" aria-controls="pane-homework">作业</button>
+        <button class="tab" id="tab-members" type="button" role="tab" aria-selected="false" aria-controls="pane-members">成员</button>
+      </div>
+
+      <div class="tab-panel" id="pane-homework" role="tabpanel" aria-labelledby="tab-homework">
+        <div id="create-homework-wrap" hidden>
+          <form id="create-homework-form" class="inline-form" novalidate>
+            <label class="field">
+              <span>作业标题</span>
+              <input id="homework-title" type="text" placeholder="例如：第三章 习题" required maxlength="120">
+            </label>
+            <label class="field">
+              <span>作业说明（可选）</span>
+              <input id="homework-description" type="text" placeholder="给学生的一点提示" maxlength="200">
+            </label>
+            <button type="submit" class="primary-button">布置作业</button>
+          </form>
+          <p class="form-note">创建后会进入扫描页面，可上传标准答案（支持连续扫描多页）。</p>
+        </div>
+        <div class="list-toolbar">
+          <input id="homework-search" class="search-input" type="search" placeholder="搜索作业标题或说明…" aria-label="搜索作业">
+        </div>
+        <ul id="homework-list" class="list"></ul>
+      </div>
+
+      <div class="tab-panel" id="pane-members" role="tabpanel" aria-labelledby="tab-members" hidden>
+        <div id="member-tools" class="list-toolbar" hidden>
+          <button class="primary-button" id="add-member" type="button">＋ 邀请成员</button>
+          <button class="secondary-button" id="add-teacher" type="button">＋ 邀请老师协同</button>
+        </div>
+        <ul id="member-list" class="member-list"></ul>
+      </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+  <script defer src="/assets/classroom.js"></script>
+{% endblock %}

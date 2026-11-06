@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}我的学习档案 · 智学伴{% endblock %}
+{% block role_chip %}学生端{% endblock %}
+{% block main_class %}page{% endblock %}
+{% block content %}
+    <header class="hw-banner profile-banner">
+      <div class="hw-banner-icon" aria-hidden="true">📊</div>
+      <div class="hw-banner-main">
+        <p class="step-label">个人学习档案</p>
+        <h1>我的知识画像</h1>
+        <p class="hw-banner-desc">AI 会根据每一次作业批改和练习，持续更新你的强弱项画像，并据此为你定制练习。</p>
+      </div>
+      <div class="profile-banner-actions">
+        <button class="primary-button profile-banner-cta" id="personal-practice" type="button">🎯 生成个性化练习</button>
+        <button class="danger-button" id="profile-reset" type="button">清除档案</button>
+      </div>
+    </header>
+
+    <section class="profile-summary" id="profile-summary"></section>
+
+    <div class="profile-layout">
+      <section class="panel">
+        <div class="section-heading">
+          <h2>知识点掌握度</h2>
+          <span class="badge badge-muted" id="topics-count"></span>
+        </div>
+        <div id="topic-bars"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <h2>练习时间线</h2>
+        </div>
+        <div id="profile-timeline"></div>
+      </section>
+    </div>
+
+    <section class="panel practice-view" id="personal-practice-panel" hidden>
+      <div class="section-heading">
+        <h2>个性化练习</h2>
+        <span class="badge badge-answer">AI 定制</span>
+      </div>
+      <p class="muted" id="personal-practice-intro"></p>
+      <div id="profile-practice-report"></div>
+      <div id="profile-practice-questions"></div>
+    </section>
+{% endblock %}
+{% block scripts %}
+  <script defer src="/assets/practice.js"></script>
+  <script defer src="/assets/profile.js"></script>
+{% endblock %}

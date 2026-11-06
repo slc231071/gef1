@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}批改 · 智学伴{% endblock %}
+{% block role_chip %}老师端 · 批改{% endblock %}
+{% block main_class %}page{% endblock %}
+{% block head %}<script>window.__HOMEWORK_ID__ = {{ homework_id }};</script>{% endblock %}
+{% block content %}
+    <header class="hw-banner">
+      <div class="hw-banner-icon" aria-hidden="true">✓</div>
+      <div class="hw-banner-main">
+        <p class="step-label">教师批改</p>
+        <h1 id="grade-title">载入中…</h1>
+        <div class="hw-meta" id="grade-meta"></div>
+      </div>
+      <div class="dashboard-actions">
+        <span id="grading-status" class="badge badge-muted" hidden></span>
+        <button class="secondary-button" id="grading-save" type="button">💾 保存</button>
+        <button class="secondary-button" id="grading-discard" type="button">🗑 舍弃保存</button>
+        <button class="primary-button" id="grading-return" type="button">📤 发还学生</button>
+        <button class="secondary-button" id="grading-unreturn" type="button" hidden>↩ 取消发还</button>
+        <a id="back-link" class="link-button hw-back" href="/">← 返回</a>
+      </div>
+    </header>
+
+    <div class="floating-toolbar" id="floating-toolbar">
+      <div class="tool-group" id="tool-group">
+        <button class="tool-button mode-btn active" id="tool-pen" type="button" title="自由手绘（Apple Pencil / 手指 / 鼠标）">✏️</button>
+        <button class="tool-button mode-btn" id="tool-text" type="button" title="点击页面添加/修改文字">🔤</button>
+        <button class="tool-button mode-btn" id="tool-shape" type="button" title="拖拽绘制图形">⬡</button>
+        <button class="tool-button mode-btn" id="tool-eraser" type="button" title="点击批注将其擦除">🧽</button>
+      </div>
+      <div class="shape-group" id="shape-group" hidden>
+        <button class="tool-button shape-btn active" data-shape="rect" type="button" title="矩形">▭</button>
+        <button class="tool-button shape-btn" data-shape="ellipse" type="button" title="椭圆">⬭</button>
+        <button class="tool-button shape-btn" data-shape="line" type="button" title="直线">╱</button>
+        <button class="tool-button shape-btn" data-shape="arrow" type="button" title="箭头">↗</button>
+      </div>
+      <label class="pen-color-label" title="颜色">
+        <input type="color" id="pen-color" value="#e02020">
+      </label>
+      <button class="tool-button" id="stroke-undo" type="button" title="撤销上一个批注">↩</button>
+      <button class="tool-button" id="stroke-redo" type="button" title="重做">↪</button>
+      <div class="page-range">
+        <input type="number" id="page-range-start" min="1" value="1" title="起始页">
+        <span>–</span>
+        <input type="number" id="page-range-end" min="1" title="结束页">
+      </div>
+      <div class="floating-divider"></div>
+      <button class="primary-button ai-float-btn" id="ai-assist" type="button" title="AI 辅助批改">🤖</button>
+    </div>
+
+    <div class="work-card panel ai-card" id="ai-card" hidden>
+      <div class="ai-progress" id="ai-progress" hidden>
+        <span id="ai-progress-text">🤖 AI 正在思考与批改…</span>
+        <div class="ai-progress-bar"><div class="ai-progress-fill" id="ai-progress-fill"></div></div>
+      </div>
+      <div class="ai-compact" id="ai-compact" hidden>
+        <div class="ai-actions">
+          <button class="ai-btn pre" id="ai-prev" type="button" title="上一条 (pre)">◀</button>
+          <button class="ai-btn tick" id="ai-tick" type="button" title="保留该 AI 批注 (tick)">✔</button>
+          <button class="ai-btn cross" id="ai-cross" type="button" title="删除该 AI 批注 (cross)">✘</button>
+          <button class="ai-btn next" id="ai-next" type="button" title="下一条 (next)">▶</button>
+        </div>
+        <span class="ai-counter" id="ai-counter">0 / 0</span>
+        <button class="ai-toggle" id="ai-toggle" type="button" title="详情">▾</button>
+      </div>
+      <div class="ai-detail" id="ai-detail" hidden>
+        <div class="ai-annotation">
+          <span class="ai-verdict" id="ai-verdict">—</span>
+          <p class="ai-text" id="ai-text"></p>
+        </div>
+        <p class="form-note">✔ 保留 · ✘ 删除 · ◀ ▶ 前后查看，确认后自动跳到下一条。</p>
+      </div>
+    </div>
+
+    <div class="grade-layout">
+      <section class="grade-main panel">
+        <div class="grade-toolbar">
+          <button class="tool-button" id="page-prev" type="button">◀ 上一页</button>
+          <span class="page-indicator" id="page-indicator">0 / 0</span>
+          <button class="tool-button" id="page-next" type="button">下一页 ▶</button>
+        </div>
+        <div class="grade-page-wrap" id="grade-page-wrap">
+          <div class="grade-page-stage" id="grade-stage">
+            <img id="grade-image" alt="学生作业页面" hidden>
+            <canvas id="grade-canvas"></canvas>
+          </div>
+          <div class="empty-state" id="grade-empty" hidden>
+            <strong>暂无提交</strong>
+            <span>该学生还没有提交作业页面。</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="grade-side">
+        <div class="work-card panel">
+          <div class="section-heading"><h2>标准答案</h2></div>
+          <div class="answer-thumbs" id="answer-thumbs"></div>
+          <p class="form-note" id="grade-note">提示：AI 辅助批改会直接在页面上画 ✔ / ✘ / 圈画和文字；你也可以用画笔 / 文字 / 图形工具手动批注，↩ 撤销可逐步移除。</p>
+        </div>
+      </aside>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+  <script defer src="/assets/grading-draw.js"></script>
+  <script defer src="/assets/grade.js"></script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}老师端 · 智学伴{% endblock %}
+{% block role_chip %}老师端{% endblock %}
+{% block main_class %}page{% endblock %}
+{% block content %}
+    <div class="dashboard-head">
+      <div>
+        <p class="step-label">老师工作台</p>
+        <h1>我的教室</h1>
+        <p class="subtitle">创建教室、邀请学生与协同老师，并在教室内布置作业。</p>
+      </div>
+      <div class="dashboard-actions">
+        <button class="primary-button" id="create-classroom" type="button">＋ 新建教室</button>
+        <button class="secondary-button" id="join-classroom" type="button">加入教室</button>
+      </div>
+    </div>
+    <div class="list-toolbar">
+      <input id="classroom-search" class="search-input" type="search" placeholder="搜索教室名称或说明…" aria-label="搜索教室">
+    </div>
+    <div class="card-grid" id="classroom-grid"></div>
+{% endblock %}
+{% block scripts %}
+  <script defer src="/assets/dashboard.js"></script>
+{% endblock %}
